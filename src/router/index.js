@@ -44,7 +44,7 @@ const routes = [
       {
         path: "/cateGory",
         name: "cateGory",
-        component: Home
+        component: () => import("@/views/goods/category/Category.vue")
       },
       // 用户列表
       {

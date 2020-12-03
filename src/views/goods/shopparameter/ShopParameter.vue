@@ -1,5 +1,5 @@
 <template>
-  <div class="shopparameter">商品分类</div>
+  <div class="shopparameter">商品参数</div>
 </template>
 
 <script>
