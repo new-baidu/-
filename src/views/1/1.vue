@@ -1,3 +1,0 @@
-Vue.extend({
-  template:templatesdffgeg
-})
