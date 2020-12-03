@@ -42,10 +42,11 @@ const routes = [
       },
       // 商品分类
       {
-        path: "/Category",
-        name: "Category",
-        component: () => import('@/views/goods/category/Category.vue')
+        path: "/cateGory",
+        name: "cateGory",
+        component: Home
       },
+      // 用户列表
       {
         path: "/userList",
         name: "userList",
