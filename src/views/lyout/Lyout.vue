@@ -1,14 +1,16 @@
 <template>
   <div class="Lyout">
-    <el-container>
-      <el-header>
-          <img src="@/assets/img/head.png" alt="">
-      </el-header>
-      <el-container>
-        <el-aside width="200px">Aside</el-aside>
-        <el-main>Main</el-main>
-      </el-container>
+    <!-- <el-container class="main"> -->
+    <el-header>
+      <img src="@/assets/img/head.png" alt="" />
+    </el-header>
+    <el-container class="container">
+      <el-aside width="300px">Aside</el-aside>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
+    <!-- </el-container> -->
   </div>
 </template>
 <script>
@@ -27,7 +29,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .Lyout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .contaniner {
+    flex: 1;
     width: 100%;
-    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+  }
 }
 </style>
