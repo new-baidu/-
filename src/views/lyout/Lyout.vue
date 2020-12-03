@@ -1,8 +1,8 @@
 <template>
   <div class="Lyout">
     <!-- <el-container class="main"> -->
-    <el-header>
-      <img src="@/assets/img/head.png" alt="" />
+    <el-header class="header">
+    <Header />
     </el-header>
     <el-container class="container">
       <el-aside width="200px"><Aside /></el-aside>
@@ -14,11 +14,12 @@
   </div>
 </template>
 <script>
-import Aside from './Aside'
+import Aside from "./Aside";
+import Header from "./Header";
 export default {
   name: "Lyout",
   components: {
-      Aside
+    Aside,Header
   },
   data() {
     return {};
@@ -36,6 +37,9 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  .header {
+    background-color: $admin-color;
+  }
   .contaniner {
     flex: 1;
     width: 100%;
@@ -43,8 +47,8 @@ export default {
     display: flex;
   }
   .el-main {
-      padding: 10px;
-      overflow: auto;
+    padding: 10px;
+    overflow: auto;
   }
 }
 </style>

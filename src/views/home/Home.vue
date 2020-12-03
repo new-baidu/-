@@ -1,6 +1,7 @@
 <template>
-  <div class="home">
-      首页
+  <div class="Home">
+      <a class="home">Welcome</a>
+      <i class="iconfont iconliebiao1"></i>
   </div>
 </template>
 
@@ -9,3 +10,11 @@ export default {
   name: 'Home',
 }
 </script>
+<style lang="scss" scoped>
+.Home {
+  .home {
+    font-size: 20px;
+    color: #ccc;
+  }
+}
+</style>

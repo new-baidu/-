@@ -22,7 +22,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submit">提交</el-button>
+          <el-button type="primary" @click="submit">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -66,7 +66,8 @@ export default {
         login(this.ruleForm).then((res) => {
           // console.log(res);
           localStorage.setItem('token', res.data.token)
-          this.usersList()
+          // this.usersList()
+          this.$router.push('/home')
         });
       });
     },
@@ -91,14 +92,11 @@ export default {
   height: 100%;
   background-color: rgb(76, 202, 248);
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .dialog {
-  width: 500px;
-  height: 500px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -250px;
-  margin-top: -250px;
+  
 }
 </style>
