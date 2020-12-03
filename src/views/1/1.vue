@@ -1,3 +1,3 @@
 Vue.extend({
-  template:template
+  template:templatesdffgeg
 })
