@@ -42,10 +42,40 @@ const routes = [
       },
       // 商品分类
       {
-        path: "/Category",
-        name: "Category",
-        component: () => import('@/views/goods/category/Category.vue')
+        path: "/cateGory",
+        name: "cateGory",
+        component: Home
       },
+      // 用户列表
+      {
+        path: "/userList",
+        name: "userList",
+        component: Home
+      },
+      // 角色列表
+      {
+        path: "/roleList",
+        name: "roleList",
+        component: Home
+      },
+      // 权限列表
+      {
+        path: "/permissionList",
+        name: "permissionList",
+        component: Home
+      },
+      // 订单列表
+      {
+        path: "/orderList",
+        name: "orderList",
+        component: Home
+      },
+      // 数据报表
+      {
+        path: "/dataReport",
+        name: "dataReport",
+        component: Home
+      }
     ]
   }
 ];
