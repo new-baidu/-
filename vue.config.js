@@ -6,5 +6,6 @@ module.exports = {
         target: "http://119.23.53.78:8888"
       }
     }
-  }
+  },
+  lintOnSave: false
 };
