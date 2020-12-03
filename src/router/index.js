@@ -25,19 +25,19 @@ const routes = [
       {
         path: "/shoplist",
         name: "shoplist",
-        component: Home
+        component: () => import('@/views/goods/shoplist/ShopList.vue')
       },
       // 商品参数
       {
         path: "/shopparameter",
         name: "shopparameter",
-        component: Home
+        component:  () => import('@/views/goods/shopparameter/ShopParameter.vue')
       },
       // 商品分类
       {
         path: "/Category",
         name: "Category",
-        component: Home
+        component: () => import('@/views/goods/category/Category.vue')
       },
     ]
   }
