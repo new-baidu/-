@@ -5,8 +5,7 @@ import Home from "../views/home/Home.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/login",
     name: "login",
     component: () => import("@/views/login/Login.vue")
@@ -14,9 +13,8 @@ const routes = [
   {
     path: "/",
     component: Lyout,
-    redirect: '/home',
-    children: [
-      {
+    redirect: "/home",
+    children: [{
         path: "/home",
         name: "home",
         component: Home
@@ -38,7 +36,7 @@ const routes = [
         path: "/Category",
         name: "Category",
         component: Home
-      },
+      }
     ]
   }
 ];
