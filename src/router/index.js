@@ -14,8 +14,9 @@ const routes = [
   {
     path: "/",
     component: Lyout,
-    redirect: '/home',
+    redirect: "/home",
     children: [
+      // 首页
       {
         path: "/home",
         name: "home",
@@ -23,15 +24,21 @@ const routes = [
       },
       // 商品列表
       {
-        path: "/shoplist",
-        name: "shoplist",
-        component: () => import('@/views/goods/shoplist/ShopList.vue')
+        path: "/shopList",
+        name: "shopList",
+        component: () => import("@/views/goods/shoplist/ShopList.vue")
+      },
+      // 添加修改商品
+      {
+        path: "/addShop",
+        name: "addShop",
+        component: Home
       },
       // 商品参数
       {
-        path: "/shopparameter",
-        name: "shopparameter",
-        component:  () => import('@/views/goods/shopparameter/ShopParameter.vue')
+        path: "/shopParameter",
+        name: "shopParameter",
+        component: () => import("@/views/goods/shopparameter/ShopParameter.vue")
       },
       // 商品分类
       {
