@@ -5,7 +5,8 @@ import Home from "../views/home/Home.vue";
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/login",
     name: "login",
     component: () => import("@/views/login/Login.vue")
@@ -14,34 +15,67 @@ const routes = [{
     path: "/",
     component: Lyout,
     redirect: "/home",
-    children: [{
+    children: [
+      // 首页
+      {
         path: "/home",
         name: "home",
         component: Home
       },
       // 商品列表
       {
-        path: "/shoplist",
-        name: "shoplist",
-        component: () => import('@/views/goods/shoplist/ShopList.vue')
+        path: "/shopList",
+        name: "shopList",
+        component: () => import("@/views/goods/shoplist/ShopList.vue")
+      },
+      // 添加修改商品
+      {
+        path: "/addShop",
+        name: "addShop",
+        component: Home
       },
       // 商品参数
       {
-        path: "/shopparameter",
-        name: "shopparameter",
-        component:  () => import('@/views/goods/shopparameter/ShopParameter.vue')
+        path: "/shopParameter",
+        name: "shopParameter",
+        component: () => import("@/views/goods/shopparameter/ShopParameter.vue")
       },
       // 商品分类
       {
-        path: "/Category",
-        name: "Category",
-<<<<<<< HEAD
-        component: () => import('@/views/goods/category/Category.vue')
+        path: "/cateGory",
+        name: "cateGory",
+        component: Home
       },
-=======
+      // 用户列表
+      {
+        path: "/userList",
+        name: "userList",
+        component: Home
+      },
+      // 角色列表
+      {
+        path: "/roleList",
+        name: "roleList",
+        component: Home
+      },
+      // 权限列表
+      {
+        path: "/permissionList",
+        name: "permissionList",
+        component: Home
+      },
+      // 订单列表
+      {
+        path: "/orderList",
+        name: "orderList",
+        component: Home
+      },
+      // 数据报表
+      {
+        path: "/dataReport",
+        name: "dataReport",
         component: Home
       }
->>>>>>> 13932e06a6a6f85c223742de3f2cb2f32757e452
     ]
   }
 ];

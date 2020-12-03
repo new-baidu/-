@@ -5,7 +5,7 @@
       <img src="@/assets/img/head.png" alt="" />
     </el-header>
     <el-container class="container">
-      <el-aside width="300px">Aside</el-aside>
+      <el-aside width="200px"><Aside /></el-aside>
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -14,9 +14,12 @@
   </div>
 </template>
 <script>
+import Aside from './Aside'
 export default {
   name: "Lyout",
-  components: {},
+  components: {
+      Aside
+  },
   data() {
     return {};
   },
@@ -38,6 +41,10 @@ export default {
     width: 100%;
     box-sizing: border-box;
     display: flex;
+  }
+  .el-main {
+      padding: 10px;
+      overflow: auto;
   }
 }
 </style>
