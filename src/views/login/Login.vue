@@ -63,19 +63,11 @@ export default {
     submit() {
       this.$refs["ruleForm"].validate((valid) => {
         if (!valid) return false;
-        console.log(this.$store)
         this.$store.dispatch('user/login', this.ruleForm).then(()=> {
           // 登录成功
-          console.log('成功')
           this.$router.push('/home')
           this.usersList()
         })
-        // login(this.ruleForm).then((res) => {
-          // console.log(res);
-          // localStorage.setItem('token', res.data.token)
-          // this.usersList()
-          // this.$router.push('/home')
-        // });
       });
     },
     usersList(){
@@ -85,9 +77,7 @@ export default {
         pagesize: 10
       }
       usersList(params).then((res)=> {
-        console.log(res)
       }).catch((err)=> {
-        console.log(err)
       })
     }
   },

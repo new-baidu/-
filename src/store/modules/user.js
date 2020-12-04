@@ -5,11 +5,9 @@ const state = {
 };
 const mutations = {
   setToken(state, data) {
-    // console.log(data);
     state.token = data;
   },
   removeToken(state) {
-    // console.log(Router)
     router.push("/login");
     localStorage.removeItem("token");
     state.token = null;

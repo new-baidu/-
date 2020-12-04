@@ -107,7 +107,6 @@ export default {
   watch:{
       $route :{
           handler: function(newVal, oldVal){
-            // console.log(newVal, oldVal)
             if(newVal.path.indexOf('addShop') !== -1){
                 // 有
                 this.active = '/shopList'
