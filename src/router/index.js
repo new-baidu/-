@@ -51,7 +51,7 @@ const routes = [
       {
         path: "/userList",
         name: "userList",
-        component: UserList
+        component: () => import("@/views/userControl/userList.vue")
       },
       // 角色列表
       {
