@@ -81,7 +81,7 @@ export default {
     usersList(){
       let params = {
         query: '',
-        // pagenum: 1,
+        pagenum: 1,
         pagesize: 10
       }
       usersList(params).then((res)=> {
