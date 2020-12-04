@@ -7,6 +7,7 @@
       text-color="#fff"
       active-text-color="#178BF7"
       :default-active="active"
+      unique-opened
     >
       <el-submenu v-for="(item, index) in list" :key="index" :index="item.id">
         <template slot="title">
@@ -106,7 +107,7 @@ export default {
   watch:{
       $route :{
           handler: function(newVal, oldVal){
-            console.log(newVal, oldVal)
+            // console.log(newVal, oldVal)
             if(newVal.path.indexOf('addShop') !== -1){
                 // 有
                 this.active = '/shopList'

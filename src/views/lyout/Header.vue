@@ -5,7 +5,7 @@
       <span class="big">名媛男团-435</span>
     </div>
 
-    <el-button class="btn" @click="$router.push('/login')">退出</el-button>
+    <el-button class="btn" @click="$store.commit('user/removeToken')">退出</el-button>
   </div>
 </template>
 <script>
