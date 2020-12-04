@@ -6,7 +6,7 @@ const request = axios.create({
 });
 request.interceptors.response.use(
   res => {
-    console.log(res);
+
     if (res.data.meta.status == 401) {
       // 登录已过期
       // 跳转回login
@@ -15,7 +15,7 @@ request.interceptors.response.use(
       store.commit("user/removeToken")
       return Promise.reject(res.data.meta.messsage);
     } else if (res.data.meta.status == 400) {
-      console.log(400);
+
       Message({
         type: "error",
         message: res.data.meta.msg,
@@ -34,7 +34,7 @@ request.interceptors.response.use(
     }
   },
   error => {
-    console.log(error,'错误');
+
     Message({
       type: "error",
       message: error || error.msg,
