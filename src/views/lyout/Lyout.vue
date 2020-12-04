@@ -37,14 +37,18 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  // overflow: hidden;
   .header {
     background-color: $admin-color;
+    padding: 10px;
+    height: auto !important;
   }
-  .contaniner {
+  .container {
     flex: 1;
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    overflow: hidden !important;
   }
   .el-main {
     padding: 10px;

@@ -63,12 +63,11 @@ export default {
     submit() {
       this.$refs["ruleForm"].validate((valid) => {
         if (!valid) return false;
-        login(this.ruleForm).then((res) => {
-          // console.log(res);
-          localStorage.setItem('token', res.data.token)
-          // this.usersList()
+        this.$store.dispatch('user/login', this.ruleForm).then(()=> {
+          // 登录成功
           this.$router.push('/home')
-        });
+          this.usersList()
+        })
       });
     },
     usersList(){
@@ -78,7 +77,7 @@ export default {
         pagesize: 10
       }
       usersList(params).then((res)=> {
-        console.log(res)
+      }).catch((err)=> {
       })
     }
   },
