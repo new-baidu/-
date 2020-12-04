@@ -127,8 +127,14 @@ export default {
   width: 100%;
   height: 100%;
   background-color: $admin-color;
+  .el-menu {
+    border: 0px;
+  }
   .el-menu-vertical-demo {
     height: 100%;
+  }
+  .el-menu-item {
+    min-width: auto;
   }
   /deep/.el-menu-item-group__title {
     display: none;

@@ -53,6 +53,7 @@ export default {
   .el-main {
     padding: 10px;
     overflow: auto;
+    background-color: rgb(250, 249, 246);
   }
 }
 </style>

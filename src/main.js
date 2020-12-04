@@ -12,7 +12,8 @@ import '@/assets/css/common.scss'
 import '@/assets/css/global.scss'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-
+import moment from 'moment';
+Vue.prototype.moment = moment;
 new Vue({
   router,
   store,
