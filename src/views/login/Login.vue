@@ -19,18 +19,21 @@
           type="password"
         ></el-input>
       </el-form-item>
-      <el-form-item>
+      <div class="foot">
         <el-button type="primary" @click="submit">登录</el-button>
         <el-button type="primary" @click="reset">重置</el-button>
-      </el-form-item>
+      </div>
     </el-form>
   </div>
 </template>
 <script>
 import { login, usersList } from "@/api/login.js";
+// import Canvas from '@/assets/js/canvas-nest.min.js'
 export default {
   name: "Login",
-  components: {},
+  components: {
+    // Canvas
+  },
   data() {
     return {
       ruleForm: {
@@ -92,24 +95,28 @@ export default {
 .Login {
   width: 100%;
   height: 100%;
-  background-color: $admin-color;
+  background: url('~@/assets/img/1.jpg') no-repeat;
+  background-size:100% 100%;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: -2;
+  filter:alpha(opacity=70);
 }
 .el-form {
-  padding: 30px 50px 20px 20px;
-  background-color: $bgc-def;
-  border-radius: 5px;
+  padding:50px 20px;
+  background: rgba($color: $bgc-def, $alpha: .6);
+  border-radius: 10px;
+  z-index: 2;
   .el-form-item {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-bottom: 40px;
   }
   /deep/.el-form-item__label {
     flex: 3;
-    text-align: right;
+    // text-align: right;
     width: auto !important;
     // padding-left: 20px;
   }
@@ -118,6 +125,20 @@ export default {
     flex: 7;
     text-align: center;
     margin-left: 0px !important;
+    margin-right: 30px;
   }
+  .foot {
+    text-align: center;
+    // margin-bottom: 20px;
+  }
+}
+</style>
+<style lang="scss">
+canvas{
+  background: transparent;
+  // background-size:100% 100%;
+  // opacity: 0.3;
+  z-index: 1 !important;
+  display: none;
 }
 </style>
