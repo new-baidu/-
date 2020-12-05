@@ -5,7 +5,7 @@
 </template>
 <script>
 import * as echarts from "echarts";
-var myChart = echarts.init(document.getElementById("main"));
+// var myChart = echarts.init(document.getElementById("main"));
 export default {
   name: "",
   components: {},
@@ -36,7 +36,8 @@ export default {
   },
   created() {
     this.$nextTick(() => {
-      this.myChart = this.$refs.main;
+      this.myChart = echarts.init(this.$refs.main);
+    //   echarts.init(this.myChart)
       this.init()
     });
     //   myChart.setOption(option)

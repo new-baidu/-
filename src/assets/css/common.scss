@@ -1,1 +1,35 @@
-$admin-color: #2E3446;
+@mixin one {
+  $admin-color: #ccccff;
+  $--color-primary: #ccffff;
+  $text-color: #ffcccc;
+}
+@mixin two {
+  $admin-color: #ccff66;
+  $--color-primary: #ff99cc;
+  $text-color: #66cccc;
+}
+@mixin three {
+  $admin-color: #666699;
+  $--color-primary: #ffff00;
+  $text-color: #cc6699;
+}
+@mixin four {
+  $admin-color: #6699cc;
+  $--color-primary: #663366;
+  $text-color: #ccffff;
+}
+// @function show(){
+// 	@return {
+//         $admin-color: #CCCCFF;
+//         $--color-primary: #CCFFFF;
+//         $text-color: #FFCCCC;
+//     }
+// @include show()
+.one {
+  // background-color: #f00;
+  @include one;
+}
+$admin-color: #79a6bd;
+$--color-primary: #ccff66;
+$text-color: #666699;
+$bgc-def: #ccffff;

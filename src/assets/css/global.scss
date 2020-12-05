@@ -1,3 +1,17 @@
+// 按钮样式
 .el-button {
-   padding: 10px;
+  padding: 10px;
+}
+// 分页的样式
+.pagination-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.el-breadcrumb {
+  padding: 10px;
+}
+* {
+  color: $text-color;
 }
