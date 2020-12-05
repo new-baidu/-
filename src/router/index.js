@@ -75,7 +75,7 @@ const routes = [
       {
         path: "/dataReport",
         name: "dataReport",
-        component: Home
+        component: () => import("@/views/dataReport/DataReport.vue")
       }
     ]
   }

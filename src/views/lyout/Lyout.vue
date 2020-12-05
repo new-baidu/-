@@ -2,12 +2,14 @@
   <div class="Lyout">
     <!-- <el-container class="main"> -->
     <el-header class="header">
-    <Header />
+      <Header />
     </el-header>
     <el-container class="container">
-      <el-aside width="200px"><Aside /></el-aside>
+      <el-aside class=""><Aside /></el-aside>
       <el-main>
-        <router-view></router-view>
+        <transition>
+          <router-view></router-view>
+        </transition>
       </el-main>
     </el-container>
     <!-- </el-container> -->
@@ -19,7 +21,8 @@ import Header from "./Header";
 export default {
   name: "Lyout",
   components: {
-    Aside,Header
+    Aside,
+    Header
   },
   data() {
     return {};
@@ -55,5 +58,16 @@ export default {
     overflow: auto;
     background-color: rgb(250, 249, 246);
   }
+  .el-aside {
+    width: 200px !important;
+  }
+  // .v-enter,
+  // .v-leave-to {
+  //   opacity: 0; /*透明度*/
+  // }
+  // .v-enter-active,
+  // .v-leave-active {
+  //   transition: all 0.5s ease;
+  // }
 }
 </style>
