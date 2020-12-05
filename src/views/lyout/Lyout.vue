@@ -27,6 +27,9 @@ export default {
   data() {
     return {};
   },
+  mounted(){
+  window.document.documentElement.setAttribute('css', 'one')
+  },
   created() {},
   computed: {},
   methods: {},
@@ -60,6 +63,7 @@ export default {
   }
   .el-aside {
     width: 200px !important;
+    min-width: 200px;
   }
   // .v-enter,
   // .v-leave-to {
@@ -69,5 +73,8 @@ export default {
   // .v-leave-active {
   //   transition: all 0.5s ease;
   // }
+  .one {
+    @include one
+  }
 }
 </style>

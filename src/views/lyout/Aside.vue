@@ -3,7 +3,6 @@
     <el-menu
       class="el-menu-vertical-demo"
       router
-      background-color="#2E3446"
       text-color="#fff"
       active-text-color="#178BF7"
       :default-active="active"
@@ -136,6 +135,7 @@ export default {
   background-color: $admin-color;
   .el-menu {
     border: 0px;
+    background-color: $admin-color;
   }
   .el-menu-vertical-demo {
     height: 100%;
@@ -145,6 +145,7 @@ export default {
     display: flex;
     padding-left: 60px !important;
     align-items: center;
+     background-color: $admin-color;
     i {
       margin-right: 10px;
     }

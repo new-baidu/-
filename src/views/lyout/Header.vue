@@ -5,7 +5,7 @@
       <span class="big">名媛男团-435</span>
     </div>
 
-    <el-button class="btn" @click="$store.commit('user/removeToken')">退出</el-button>
+    <el-button class="btn" @click="$store.commit('user/removeToken')" type="primary">退出</el-button>
   </div>
 </template>
 <script>
@@ -34,9 +34,14 @@ export default {
     display: flex;
     align-items: center;
   }
+  img{
+    // width: ;
+    height: 50px;
+    width: 50px;
+  }
   .big {
     font-size: 30px;
-    color: rgb(247, 238, 247);
+    // color: #fff;
     margin-left: 20px;
   }
 }
