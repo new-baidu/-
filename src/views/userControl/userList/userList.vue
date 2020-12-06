@@ -36,8 +36,8 @@
       </div>
 
       <div class="page">
-        <el-pagination @size-change="" @current-change="handleCurrentChange"
-          :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100"
+        <el-pagination  @current-change="handleCurrentChange"
+          :current-page="page" :page-sizes="[100, 200, 300, 400]" :page-size="100"
           layout="total, sizes, prev, pager, next, jumper" :total="400">
         </el-pagination>
       </div>
@@ -65,11 +65,7 @@
         pageSize: 2, // 每页大小
         total: null, // 总条数
         list: [], // 获取到的数据
-        input: '',
-        currentPage1: 5,
-        currentPage2: 5,
-        currentPage3: 5,
-        currentPage4: 4
+        input: ''
       }
     },
     computed: {},
