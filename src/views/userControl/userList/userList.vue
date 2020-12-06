@@ -37,8 +37,8 @@
 
       <div class="page">
         <el-pagination  @current-change="handleCurrentChange"
-          :current-page="page" :page-sizes="[100, 200, 300, 400]" :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper" :total="400">
+          :current-page="page" :page-sizes="[2, 5, 10]" :page-size="100" @size-change="sizeChange"
+          layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </el-card>
@@ -80,20 +80,24 @@
       onUserList() {
         let Data = {
           pagenum: this.page,
-          pagesize: this.pageSize,
-          query: this.total
+          pagesize: this.pageSize
         }
         getUserList(Data).then(res => {
           this.list = res.data.users
-          console.log(this.list)
+          this.total = res.data.total
         })
       },
 
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+      // 每页大小
+      sizeChange (pageSize) {
+        this.pageSize = pageSize;
+        this.onUserList()
       },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+
+      // 当前页面
+      handleCurrentChange (page) {
+        this.page = page;
+        this.onUserList()
       }
     }
   }

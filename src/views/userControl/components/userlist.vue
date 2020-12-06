@@ -7,15 +7,15 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="username" label="姓名" width="160">
+      <el-table-column prop="username" label="姓名" width="170">
       </el-table-column>
-      <el-table-column prop="email" label="邮箱" width="160">
+      <el-table-column prop="email" label="邮箱" width="170">
       </el-table-column>
-      <el-table-column prop="mobile" label="电话" width="160">
+      <el-table-column prop="mobile" label="电话" width="170">
       </el-table-column>
-      <el-table-column prop="role_name" label="角色" width="160">
+      <el-table-column prop="role_name" label="角色" width="170">
       </el-table-column>
-      <el-table-column prop="address" label="状态" width="180">
+      <el-table-column prop="address" label="状态" width="170">
 
         <!-- 状态开启关闭 -->
         <el-switch v-model="value">
@@ -28,13 +28,13 @@
         <el-row class="state">
 
           <!-- 添加 -->
-          <el-button type="primary" icon="el-icon-search" size="mini" ></el-button>
+          <el-button class="states" type="primary" icon="el-icon-search" size="mini"></el-button>
 
           <!-- 删除 -->
-          <el-button type="danger" icon="el-icon-delete"  size="mini"></el-button>
+          <el-button class="states" type="danger" icon="el-icon-delete"  size="mini"></el-button>
 
           <!-- 设置 -->
-          <el-button type="warning" icon="el-icon-star-off" size="mini"></el-button>
+          <el-button class="states" type="warning" icon="el-icon-s-tools" size="mini"></el-button>
 
         </el-row>
 
@@ -67,9 +67,10 @@
 <style lang="scss" scoped>
   .state{
     display: flex;
-    justify-content: center;
-    .button{
-      width: 30%;
+    justify-content: left;
+    .states{
+      width: 20%;
+      color: #fff;
     }
   }
 
