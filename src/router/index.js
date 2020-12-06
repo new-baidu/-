@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Lyout from "../views/lyout/Lyout.vue";
 import Home from "../views/home/Home.vue";
-import UserList from '../views/userControl/userList.vue';
+import UserList from '../views/userControl/userList/userList.vue';
 
 Vue.use(VueRouter);
 
@@ -51,7 +51,7 @@ const routes = [
       {
         path: "/userList",
         name: "userList",
-        component: () => import("@/views/userControl/userList.vue")
+        component: () => import("@/views/userControl/userList/userList.vue")
       },
       // 角色列表
       {
