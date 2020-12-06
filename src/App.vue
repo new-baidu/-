@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
+<script>
+// import Canvas from '@/assets/js/canvas-nest.min.js'
 
+export default {
+  components: {
+    // Canvas
+  }
+};
+</script>
 <style lang="scss" scoped>
+canvas{
+  background: rgb(226, 225, 225);
+  opacity: 0.3;
+}
+@import '~@/assets/css/common.scss';
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-//   width: 100vh;
   height: 100vh;
 }
+
 </style>

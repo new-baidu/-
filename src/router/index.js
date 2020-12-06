@@ -33,7 +33,7 @@ const routes = [
       {
         path: "/addShop",
         name: "addShop",
-        component: Home
+        component: () => import("@/views/goods/addShop/addShop.vue")
       },
       // 商品参数
       {
@@ -75,7 +75,7 @@ const routes = [
       {
         path: "/dataReport",
         name: "dataReport",
-        component: Home
+        component: () => import("@/views/dataReport/DataReport.vue")
       }
     ]
   }

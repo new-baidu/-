@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import './assets/js/setrem.js'
 import '@/router/before.js'
 import store from './store'
 import ElementUI from 'element-ui';
@@ -9,6 +10,7 @@ import "@/assets/font/iconfont.js";
 import "@/assets/font/iconfont.css";
 import '@/assets/css/init.css'
 import '@/assets/css/common.scss'
+import '@/assets/css/element-variables.scss'
 import '@/assets/css/global.scss'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
