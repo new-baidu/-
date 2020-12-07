@@ -16,8 +16,8 @@ module.exports = {
       postcss: {
         plugins: [
           require("postcss-pxtorem")({
-            rootValue: 16, // 换算的基数
-            selectorBlackList: ["weui", "mu"], // 忽略转换正则匹配项
+            rootValue: 16,
+            selectorBlackList: ["weui", "mu"],
             propList: ["*"],
             unitPrecision: 3
           })

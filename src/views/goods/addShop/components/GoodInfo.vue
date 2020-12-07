@@ -41,9 +41,9 @@ export default {
     return {
       ruleForm: {
         name: "", // 商品名称
-        price: "", // 商品价格
-        weight: "", // 商品重量
-        num: "", // 商品数量
+        price: 0, // 商品价格
+        weight: 0, // 商品重量
+        num: 0, // 商品数量
       },
       rules: {
         name: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
@@ -78,7 +78,7 @@ export default {
       this.options = data.data;
     },
     handleChange(value) {
-      this.$emit('handleChange',this.value)
+      this.$emit('handleChange',{value: this.value,ruleForm:this.ruleForm})
     },
   },
 };

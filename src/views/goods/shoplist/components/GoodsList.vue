@@ -1,7 +1,7 @@
 <template>
   <div class="goodslist">
     <!-- 表格 -->
-    <el-table :data="goodsList" :border="true" style="width: 100%">
+    <el-table :data="goodsList" :border="true" style="width: 100%" :stripe="true">
       <el-table-column prop="index" label="#" width="50">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -29,15 +29,15 @@
         align="center"
       >
       </el-table-column>
-      <el-table-column prop="operation" label="操作" width="160" align="center">
+      <el-table-column prop="operation" label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button class="btn" type="primary" icon="el-icon-edit" ></el-button>
+          <el-button class="btn" type="primary" icon="el-icon-edit" >编辑</el-button>
           <el-button
             class="btn"
             type="danger"
             icon="el-icon-delete"
             @click="deleteGoods(scope.row.goods_id)"
-          ></el-button>
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -95,7 +95,7 @@ export default {
   margin: 15px 0;
   padding: 0 15px;
   .btn {
-    width: 55px;
+    width: 80px;
   }
 }
 </style>

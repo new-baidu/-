@@ -7,11 +7,16 @@ const request = axios.create({
 request.interceptors.response.use(
   res => {
 
-    if (res.data.meta.status == 401) {
+    if (res.data.meta.status == 400 && res.data.meta.msg == '无效token') {
       // 登录已过期
       // 跳转回login
       // 清楚token
       // 存你当前的路径
+      Message({
+        type: "error",
+        message: '登录已过期，请重新登录！',
+        duration: 3000
+      });
       store.commit("user/removeToken")
       return Promise.reject(res.data.meta.messsage);
     } else if (res.data.meta.status == 400) {
