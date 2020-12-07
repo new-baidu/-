@@ -1,0 +1,77 @@
+<template>
+  <div class="userlist">
+    <!-- 表格 -->
+    <el-table :data="userlist" border style="width: 100%">
+      <el-table-column prop="index" label="#" width="50">
+        <template slot-scope="scope">
+          {{ scope.$index + 1 }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="username" label="姓名" width="160">
+      </el-table-column>
+      <el-table-column prop="email" label="邮箱" width="160">
+      </el-table-column>
+      <el-table-column prop="mobile" label="电话" width="160">
+      </el-table-column>
+      <el-table-column prop="role_name" label="角色" width="160">
+      </el-table-column>
+      <el-table-column prop="address" label="状态" width="180">
+
+        <!-- 状态开启关闭 -->
+        <el-switch v-model="value">
+        </el-switch>
+
+      </el-table-column>
+      <el-table-column prop="address" label="操作">
+
+        <!-- 编辑、删除、设置按钮 -->
+        <el-row class="state">
+
+          <!-- 添加 -->
+          <el-button type="primary" icon="el-icon-search" size="mini" ></el-button>
+
+          <!-- 删除 -->
+          <el-button type="danger" icon="el-icon-delete"  size="mini"></el-button>
+
+          <!-- 设置 -->
+          <el-button type="warning" icon="el-icon-star-off" size="mini"></el-button>
+
+        </el-row>
+
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'Userlist',
+    props: {
+      userlist: {
+        type: [String, Array, Object],
+      }
+    },
+    data() {
+      return {
+        value: true,
+      }
+    },
+    methods: {
+
+    }
+
+  }
+
+</script>
+
+<style lang="scss" scoped>
+  .state{
+    display: flex;
+    justify-content: center;
+    .button{
+      width: 30%;
+    }
+  }
+
+
+</style>
