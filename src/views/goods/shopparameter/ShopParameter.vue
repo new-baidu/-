@@ -64,9 +64,8 @@ export default {
 
 <style scoped lang="scss">
 .shopparameter {
-  padding: 20px;
   .box-card {
-    margin-top: 20px;
+    margin-top: 10px;
   }
   .block {
     margin: 20px 0;

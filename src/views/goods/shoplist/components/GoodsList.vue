@@ -1,7 +1,7 @@
 <template>
   <div class="goodslist">
     <!-- 表格 -->
-    <el-table :data="goodsList" :border="true" style="width: 100%">
+    <el-table :data="goodsList" :border="true" style="width: 100%" :stripe="true">
       <el-table-column prop="index" label="#" width="50">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}

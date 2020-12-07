@@ -118,9 +118,8 @@ export default {
 
 <style scoped lang="scss">
 .shoplist {
-  padding: 20px;
   .box-card {
-    margin-top: 20px;
+    margin-top: 10px;
   }
   .search-box {
     display: flex;
