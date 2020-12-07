@@ -15,11 +15,11 @@ export const deleteGoods = (id) => {
     })
 }
 // 添加商品
-export const addGoods = params => {
+export const addGoods = data => {
     return request({
         method: 'POST',
-        url:'/goods/',
-        params
+        url:'/goods',
+        data
     })
 }
 // 获取商品
