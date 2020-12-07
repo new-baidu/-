@@ -18,11 +18,11 @@
 
         <div class="search-box">
           <!-- 搜索框 -->
-          <el-input class="search" v-model="input" placeholder="请输入内容"></el-input>
+          <el-input class="search" v-model="query" placeholder="请输入内容"></el-input>
           <!--/ 搜索框 -->
 
 
-          <el-button class="button" icon="el-icon-search"></el-button>
+          <el-button class="button" icon="el-icon-search" @click="onSearch"></el-button>
         </div>
 
         <!-- 添加用户 -->
@@ -32,13 +32,14 @@
 
       <!-- 表格 -->
       <div class="data">
-        <Userlist :userlist='list'></Userlist>
+        <Userlist :userlist='list'  v-loading="loading"
+        element-loading-text="正在拼命加载中"></Userlist>
       </div>
 
       <div class="page">
-        <el-pagination  @current-change="handleCurrentChange"
-          :current-page="page" :page-sizes="[2, 5, 10]" :page-size="100" @size-change="sizeChange"
-          layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination @current-change="handleCurrentChange" :current-page="page" :page-sizes="[2, 5, 10]"
+          :page-size="100" @size-change="sizeChange" layout="total, sizes, prev, pager, next, jumper" :total="total"
+          :disabled="loading">
         </el-pagination>
       </div>
     </el-card>
@@ -51,8 +52,8 @@
 <script>
   import Userlist from '../components/userlist.vue'
   import {
-  getUserList
-} from '@/api/userList'
+    getUserList
+  } from '@/api/userList'
 
   export default {
     name: 'UserList',
@@ -65,7 +66,8 @@
         pageSize: 2, // 每页大小
         total: null, // 总条数
         list: [], // 获取到的数据
-        input: ''
+        query: '', // 查询参数
+        loading: true // loading等待
       }
     },
     computed: {},
@@ -78,27 +80,41 @@
 
       // 获取用户列表
       onUserList() {
+        this.loading = true
         let Data = {
           pagenum: this.page,
-          pagesize: this.pageSize
+          pagesize: this.pageSize,
+          query: this.query
         }
         getUserList(Data).then(res => {
           this.list = res.data.users
+          console.log(this.list)
           this.total = res.data.total
+          this.$message({
+            message: '成功获取到用户信息',
+            type: 'success'
+          })
+          this.loading = false
         })
       },
 
       // 每页大小
-      sizeChange (pageSize) {
+      sizeChange(pageSize) {
         this.pageSize = pageSize;
         this.onUserList()
       },
 
       // 当前页面
-      handleCurrentChange (page) {
+      handleCurrentChange(page) {
         this.page = page;
         this.onUserList()
+      },
+
+      // 搜索获取用户信息
+      onSearch() {
+        this.onUserList()
       }
+
     }
   }
 

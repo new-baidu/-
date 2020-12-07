@@ -8,3 +8,15 @@ export const getUserList = params => {
     params
   })
 }
+
+// 修改用户状态
+export const putUserList = (uId,type) => {
+  return request({
+    method:'put',
+    url:`users/${uId}/state/${type}`,
+    params: {
+      uId,
+      type
+    }
+  })
+}
