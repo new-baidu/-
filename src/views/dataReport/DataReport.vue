@@ -14,7 +14,7 @@ export default {
       myChart: null,
       option: {
         title: {
-          text: "ECharts 入门示例"
+          text: "435"
         },
         tooltip: {},
         legend: {
