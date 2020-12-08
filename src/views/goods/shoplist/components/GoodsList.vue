@@ -92,7 +92,7 @@ export default {
 
 <style scoped lang="scss">
 .goodslist {
-  margin: 15px 0;
+  margin: 10px 0;
   padding: 0 15px;
   .btn {
     width: 80px;

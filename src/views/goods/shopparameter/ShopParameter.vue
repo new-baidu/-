@@ -21,52 +21,145 @@
         <el-cascader
           v-model="value"
           :options="options"
-          :props="{ expandTrigger: 'hover' }"
+          :props="optionProps"
           @change="handleChange"
         ></el-cascader>
       </div>
       <!-- tab切换 -->
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="动态参数" name="dynamic"><shop-dynamic /></el-tab-pane>
-        <el-tab-pane label="静态属性" name="static"><shop-static /></el-tab-pane>
+        <el-tab-pane label="动态参数" name="dynamic">
+          <el-button type="primary" @click="addParameter" :disabled="disabled"
+            >添加参数</el-button
+          >
+          <shop-dynamic :attrList="attrs"   @upload="upload" :value="value" :title="title" />
+        </el-tab-pane>
+        <el-tab-pane label="静态属性" name="static">
+          <el-button type="primary" :disabled="disabled" @click="addParameter"
+            >添加属性</el-button
+          >
+          <shop-static   @upload="upload" :attrList="attrs" :value="value" :title="title" />
+        </el-tab-pane>
       </el-tabs>
+      <!-- 弹出框 -->
+      <shop-dialog
+        :visible.sync="visible"
+        @dialogFormVisible="visible = false"
+        :title="['添加', title]"
+        @close="visible = false"
+      />
     </el-card>
   </div>
 </template>
 
 <script>
-import Dynamic from './components/Dynamic'
-import Static from './components/Static'
-export default {
+import { getCategories, getGoodAttributes } from "@/api/goods";
+import ParameterTable from "./components/ParameterTable";
+import ShopDialog from "./components/ShopDialog";
+// import Static from "./components/Static";
+export default  {
   name: "ShopParameter",
   components: {
-    'shop-dynamic':Dynamic,
-    'shop-static': Static
+    "shop-dynamic": ParameterTable,
+    "shop-static": ParameterTable,
+    "shop-dialog": ShopDialog,
   },
   props: {},
   data() {
     return {
-      options: [],
-      value: [],
+      disabled: true,
+      options: [], // 商品分类列表
+      value: [], // 选择的商品分类
+      optionProps: {
+        expandTrigger: "hover",
+        value: "cat_id",
+        label: "cat_name",
+        children: "children",
+      }, // props配置
       activeName: "dynamic", // tab选中高亮
+      attrList: [], // 获取的参数列表和属性列表
+      attrs: [], // 处理后的数据
+      visible: false, // 控制弹出框
+      title: "",
     };
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    // 获取商品分类
+    this.getCategories();
+    // 获取参数列表
+    // this.getGoodAttributes("many");
+  },
   mounted() {},
   methods: {
-    handleChange() {},
-    handleClick() {},
+    // 获取商品分类
+    async getCategories() {
+      const data = await getCategories();
+      this.options = data.data;
+      // console.log(data);
+    },
+    //  获取参数列表
+    async getGoodAttributes(sel) {
+      let id = this.value[this.value.length - 1];
+      const data = await getGoodAttributes(id, {
+        sel,
+      });
+      this.attrList = data.data;
+      this.dispose();
+    },
+    // 选择分类发送请求
+    handleChange() {
+      this.disabled = false;
+      if (this.activeName == "dynamic") {
+        this.title = "动态参数";
+        this.getGoodAttributes("many");
+      } else if (this.activeName == "static") {
+        this.title = "静态属性";
+        this.getGoodAttributes("only");
+      }
+    },
+    // 切换tab 发送不同的请求
+    handleClick(tab) {
+      if (tab.index == 0 && this.value.length !== 0) {
+        this.title = "动态参数";
+        this.getGoodAttributes("many");
+      } else if (tab.index == 1 && this.value.length !== 0) {
+        this.title = "静态属性";
+        this.getGoodAttributes("only");
+      }
+    },
+    upload() {
+      if (this.activeName == "dynamic") {
+        this.getGoodAttributes("many");
+      } else if (this.activeName == "static") {
+        this.getGoodAttributes("only");
+      }
+      console.log(789);
+    },
+    // 处理数据
+    dispose() {
+      this.attrs = [];
+      this.attrList.forEach((val) => {
+        this.attrs.push({
+          attr_id: val.attr_id,
+          attr_name: val.attr_name,
+          attr_sel: val.attr_sel,
+          attr_vals: val.attr_vals !== "" ? val.attr_vals.split(",") : [],
+          attr_write: val.attr_write,
+          cat_id: val.cat_id,
+          delete_time: val.delete_time,
+        });
+      });
+    }, // 添加参数
+    addParameter() {
+      this.visible = true;
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
 .shopparameter {
-  .box-card {
-    margin-top: 10px;
-  }
   .block {
     margin: 20px 0;
   }
