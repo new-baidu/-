@@ -57,7 +57,6 @@ export default {
       options: [],
       optionProps: {
         expandTrigger: "hover",
-        hover: "hover",
         value: "cat_id",
         label: "cat_name",
         children: "children",
