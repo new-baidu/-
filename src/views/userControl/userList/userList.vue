@@ -26,14 +26,13 @@
         </div>
 
         <!-- 添加用户 -->
-        <el-button class="addButton" type="primary">添加用户</el-button>
+        <el-button class="addButton" type="primary" @click="addUser">添加用户</el-button>
 
       </div>
 
       <!-- 表格 -->
       <div class="data">
-        <Userlist :userlist='list'  v-loading="loading"
-        element-loading-text="正在拼命加载中"></Userlist>
+        <Userlist :userlist='list' v-loading="loading" element-loading-text="拼命加载中"></Userlist>
       </div>
 
       <div class="page">
@@ -88,7 +87,7 @@
         }
         getUserList(Data).then(res => {
           this.list = res.data.users
-          console.log(this.list)
+          // console.log(this.list)
           this.total = res.data.total
           this.$message({
             message: '成功获取到用户信息',
@@ -113,11 +112,22 @@
       // 搜索获取用户信息
       onSearch() {
         this.onUserList()
-      }
+      },
 
+      // 添加用户
+      addUser() {
+        this.$alert('这是一段内容', '标题名称', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${action}`
+            });
+          }
+        })
+      }
     }
   }
-
 </script>
 
 <style lang="scss" scoped>

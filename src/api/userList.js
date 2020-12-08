@@ -12,11 +12,20 @@ export const getUserList = params => {
 // 修改用户状态
 export const putUserList = (uId,type) => {
   return request({
-    method:'put',
+    method:'PUT',
     url:`users/${uId}/state/${type}`,
     params: {
       uId,
       type
     }
+  })
+}
+
+// 删除用户
+export const deleteUserList = params => {
+  return request({
+    method: 'DELETE',
+    url: `users/'${id}'`,
+    params
   })
 }

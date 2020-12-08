@@ -29,7 +29,7 @@
         <!-- 编辑、删除、设置按钮 -->
         <el-row class="state">
 
-          <!-- 添加 -->
+          <!-- 编辑 -->
           <el-button class="states el-icon-edit" type="primary" size="mini"></el-button>
 
           <!-- 删除 -->
