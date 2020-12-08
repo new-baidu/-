@@ -150,7 +150,6 @@ export default  {
           delete_time: val.delete_time,
         });
       });
-      console.log(this.attrs);
     }, // 添加参数
     addParameter() {
       this.visible = true;

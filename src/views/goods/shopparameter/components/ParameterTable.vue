@@ -16,7 +16,7 @@
             :disable-transitions="false"
             type="success"
             @close="
-              Categories(
+              upCategories(
                 scope.row.attr_id,
                 scope.row.attr_name,
                 scope.row.attr_sel,
