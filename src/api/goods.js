@@ -50,7 +50,7 @@ export const Categories = (id, attrId,data) => {
 export const PutCategories = (id,attrId,data) => {
   return request({
     method: 'PUT',
-    url: `categories/${id}/attributes/${attrId}`,
+    url: `/categories/${id}/attributes/${attrId}`,
     data
   })
 }
@@ -58,7 +58,15 @@ export const PutCategories = (id,attrId,data) => {
 export const DeleteCategories = (id,attrId,data) => {
   return request({
     method: 'DELETE',
-    url: `categories/${id}/attributes/${attrId}`,
+    url: `/categories/${id}/attributes/${attrId}`,
+    data
+  })
+}
+// 天机商品参数
+export const addCategories = (id,data) => {
+  return request({
+    method: 'POST',
+    url: `/categories/${id}/attributes`,
     data
   })
 }
