@@ -33,7 +33,7 @@
           <el-button class="states el-icon-edit" type="primary" size="mini"></el-button>
 
           <!-- 删除 -->
-          <el-button class="states el-icon-delete" type="danger" size="mini"></el-button>
+          <el-button class="states el-icon-delete" type="danger" size="mini" @click="onDelete"></el-button>
 
           <!-- 设置 -->
           <el-button class="states el-icon-s-tools" type="warning" size="mini"></el-button>
@@ -84,6 +84,11 @@
             })
           }
         })
+      },
+
+      // 删除
+      onDelete () {
+        
       }
     }
 

@@ -26,7 +26,12 @@
         </div>
 
         <!-- 添加用户 -->
-        <el-button class="addButton" type="primary" @click="addUser">添加用户</el-button>
+        <el-button class="addButton" type="primary" @click="onShow">添加用户</el-button>
+
+        <!-- 对话框 -->
+        <div class="Dialog">
+          <AddDialog :show.sync="show"></AddDialog>
+        </div>
 
       </div>
 
@@ -50,6 +55,7 @@
 
 <script>
   import Userlist from '../components/userlist.vue'
+  import AddDialog from '../components/addDialogVisible.vue'
   import {
     getUserList
   } from '@/api/userList'
@@ -57,7 +63,8 @@
   export default {
     name: 'UserList',
     components: {
-      'Userlist': Userlist
+      'Userlist': Userlist,
+      'AddDialog': AddDialog
     },
     data() {
       return {
@@ -66,7 +73,8 @@
         total: null, // 总条数
         list: [], // 获取到的数据
         query: '', // 查询参数
-        loading: true // loading等待
+        loading: true, // loading等待
+        show: false
       }
     },
     computed: {},
@@ -115,16 +123,9 @@
       },
 
       // 添加用户
-      addUser() {
-        this.$alert('这是一段内容', '标题名称', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${action}`
-            });
-          }
-        })
+      onShow() {
+        this.show = true
+        console.log(123)
       }
     }
   }
