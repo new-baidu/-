@@ -17,7 +17,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible">取 消</el-button>
+        <el-button @click="close">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisible">确 定</el-button>
       </div>
     </el-dialog>
@@ -25,8 +25,7 @@
 </template>
 
 <script>
-
-import { PutCategories } from "@/api/goods";
+import { PutCategories, addCategories } from "@/api/goods";
 export default {
   name: "",
   components: {},
@@ -73,8 +72,12 @@ export default {
       this.$emit("close");
     },
     dialogFormVisible() {
-      this.PutCategories();
-    },
+      if (this.title[0] == "修改") {
+        this.PutCategories();
+      } else if (this.title[0] == "添加") {
+        this.addCategories();
+      }
+    }, // 编辑参数
     async PutCategories() {
       let sel = this.title[1] == "动态参数" ? "many" : "only";
       let id = this.value[this.value.length - 1];
@@ -90,13 +93,28 @@ export default {
         this.upload();
         this.$emit("dialogFormVisible");
       }
-      console.log(data);
+    }, // 添加参数
+    async addCategories() {
+      console.log(this.value);
+      let sel = this.title[1] == "动态参数" ? "many" : "only";
+      let id = this.value[this.value.length - 1];
+      const data = await addCategories(id, {
+        attr_name: this.form.name,
+        attr_sel: sel,
+        attr_vals: "",
+      });
+      if (data.meta.status == 201) {
+        this.$message({
+          message: data.meta.msg,
+          type: "success",
+        });
+        this.upload();
+        this.$emit("dialogFormVisible");
+        this.form.name = ''
+      }
     },
     upload() {
-      //   this.$parent.upload()
-      console.log(123);
-      this.$emit('upload')
-      // console.log(this.$parent);
+      this.$emit("upload");
     },
   },
 };

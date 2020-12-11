@@ -45,7 +45,9 @@
         :visible.sync="visible"
         @dialogFormVisible="visible = false"
         :title="['添加', title]"
+        :value="value"
         @close="visible = false"
+        @upload="upload"
       />
     </el-card>
   </div>
