@@ -10,8 +10,8 @@
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-tag
-            :key="index"
             v-for="(tag, index) in scope.row.attr_vals"
+            :key="index"
             closable
             :disable-transitions="false"
             type="success"
@@ -28,10 +28,10 @@
             {{ tag }}
           </el-tag>
           <el-input
-            class="input-new-tag"
             v-if="inputVisible"
-            v-model="inputValue"
             ref="saveTagInput"
+            v-model="inputValue"
+            class="input-new-tag"
             size="small"
             @keyup.enter.native="handleInputConfirm()"
             @blur="
@@ -41,37 +41,49 @@
                 scope.row.attr_sel
               )
             "
-          >
-          </el-input>
+          />
           <el-button
             v-else
             class="button-new-tag"
             size="small"
             @click="showInput()"
-            >+ New Tag</el-button
           >
+            + New Tag
+          </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="序号" prop="id" width="50">
+      <el-table-column
+        label="序号"
+        prop="id"
+        width="50"
+      >
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column label="商品名称" prop="attr_name"></el-table-column>
-      <el-table-column label="描述" prop="desc">
+      <el-table-column
+        label="商品名称"
+        prop="attr_name"
+      />
+      <el-table-column
+        label="操作"
+        prop="caozuo"
+      >
         <template slot-scope="scope">
           <el-button
             type="primary"
             icon="el-icon-edit"
             @click="editorParameter(scope.row.attr_name, scope.row.attr_id)"
-            >编辑</el-button
           >
+            编辑
+          </el-button>
           <el-button
             type="danger"
             icon="el-icon-delete"
             @click="deleteParameter(scope.row.attr_id)"
-            >删除</el-button
           >
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -90,8 +102,8 @@
 </template>
 
 <script>
-import { Categories, DeleteCategories } from "@/api/goods";
-import ShopDialog from "./ShopDialog";
+import { Categories, DeleteCategories } from "@/api/goods"
+import ShopDialog from "./ShopDialog"
 export default {
   name: "",
   components: {
@@ -112,18 +124,18 @@ export default {
   data() {
     return {
       attrs: [],
-      inputValue: "", //输入的内容
+      inputValue: "", // 输入的内容
       inputVisible: false, // 输入框显示隐藏
       visible: false, // 弹出窗显示
       attr_name: "", // 点击弹出的内容
       attr_id: "", // 编辑的id
-    };
+    }
   },
   computed: {},
   watch: {
     // 从新写到data
     attrList() {
-      this.attrs = this.attrList;
+      this.attrs = this.attrList
     },
   },
   created() {},
@@ -132,7 +144,7 @@ export default {
     expandChange() {},
     // 删除分类参数
     deleteParameter(attrId) {
-      let id = this.value[this.value.length - 1];
+      const id = this.value[this.value.length - 1]
       this.$confirm("你确定要删除吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -140,87 +152,87 @@ export default {
       })
         .then(async () => {
           // 确认发送请求
-          const data = await DeleteCategories(id, attrId);
+          const data = await DeleteCategories(id, attrId)
           if (data.meta.status == 200) {
             this.$message({
               message: data.meta.msg,
               type: "success",
-            });
-            this.$emit("upload");
+            })
+            this.$emit("upload")
           }
         })
-        .catch(() => {});
+        .catch(() => {})
     },
     // 更新参数
     async upCategories(arrtId, attr_name, attr_sel, attr_vals, tag) {
       // 定义数组
-      let arr = [];
+      const arr = []
       // 遍历数组，把删除的排除掉，把剩下的放到新数组
       attr_vals.forEach((val) => {
         if (val !== tag) {
-          arr.push(val);
+          arr.push(val)
         }
-      });
+      })
       // 获取分类id
-      let id = this.value[this.value.length - 1];
+      const id = this.value[this.value.length - 1]
       // 发送请求
       const data = await Categories(id, arrtId, {
         attr_name,
         attr_sel,
         attr_vals: arr.join(","),
-      });
+      })
       // 成功返回提示
       if (data.meta.status == 200) {
         this.$message({
           message: data.meta.msg,
           type: "success",
-        });
-        attr_vals.splice(attr_vals.indexOf(tag), 1);
+        })
+        attr_vals.splice(attr_vals.indexOf(tag), 1)
       }
       // console.log(arr);
     }, // 点击 显示input输入框
     showInput() {
-      this.inputVisible = true;
+      this.inputVisible = true
       this.$nextTick(() => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
     }, // 失去焦点
     async handleInputConfirm(index, attr_id, sel) {
-      let inputValue = this.inputValue;
-      let id = this.value[this.value.length - 1];
+      const inputValue = this.inputValue
+      const id = this.value[this.value.length - 1]
       // 判断是否为空
       if (inputValue) {
-        this.attrs[index].attr_vals.push(inputValue);
+        this.attrs[index].attr_vals.push(inputValue)
       }
       // 输入框隐藏
-      this.inputVisible = false;
+      this.inputVisible = false
       // 清空内容
-      this.inputValue = "";
+      this.inputValue = ""
       // 发送请求
       const data = await Categories(id, attr_id, {
         attr_name: inputValue,
         attr_sel: sel,
         attr_vals: this.attrs[index].attr_vals.join(","),
-      });
+      })
       // 成功提示
       if (data.meta.status == 200) {
         this.$message({
           message: data.meta.msg,
           type: "success",
-        });
+        })
       }
     }, // 点击编辑弹出
     editorParameter(name, id) {
-      this.visible = true;
-      this.attr_name = name;
-      this.attr_id = id;
+      this.visible = true
+      this.attr_name = name
+      this.attr_id = id
       // console.log(name);
     },
     upload() {
-      this.$emit("upload");
+      this.$emit("upload")
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

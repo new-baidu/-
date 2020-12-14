@@ -2,19 +2,23 @@
   <div class="shopparameter">
     <!-- 面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">
+        首页
+      </el-breadcrumb-item>
       <el-breadcrumb-item>商品管理</el-breadcrumb-item>
       <el-breadcrumb-item>分类参数</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片 -->
-    <el-card class="box-card" shadow="never">
+    <el-card
+      class="box-card"
+      shadow="never"
+    >
       <!-- 警告 -->
       <el-alert
         title="注意：只允许为第三级分类设置相关参数！"
         show-icon
         type="warning"
-      >
-      </el-alert>
+      />
       <!-- 层级选择器 -->
       <div class="block">
         <span class="demonstration">选择商品分类：</span>
@@ -23,29 +27,56 @@
           :options="options"
           :props="optionProps"
           @change="handleChange"
-        ></el-cascader>
+        />
       </div>
       <!-- tab切换 -->
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="动态参数" name="dynamic">
-          <el-button type="primary" @click="addParameter" :disabled="disabled"
-            >添加参数</el-button
+      <el-tabs
+        v-model="activeName"
+        @tab-click="handleClick"
+      >
+        <el-tab-pane
+          label="动态参数"
+          name="dynamic"
+        >
+          <el-button
+            type="primary"
+            :disabled="disabled"
+            @click="addParameter"
           >
-          <shop-dynamic :attrList="attrs"   @upload="upload" :value="value" :title="title" />
+            添加参数
+          </el-button>
+          <shop-dynamic
+            :attr-list="attrs"
+            :value="value"
+            :title="title"
+            @upload="upload"
+          />
         </el-tab-pane>
-        <el-tab-pane label="静态属性" name="static">
-          <el-button type="primary" :disabled="disabled" @click="addParameter"
-            >添加属性</el-button
+        <el-tab-pane
+          label="静态属性"
+          name="static"
+        >
+          <el-button
+            type="primary"
+            :disabled="disabled"
+            @click="addParameter"
           >
-          <shop-static   @upload="upload" :attrList="attrs" :value="value" :title="title" />
+            添加属性
+          </el-button>
+          <shop-static
+            :value="value"
+            :attr-list="attrs"
+            :title="title"
+            @upload="upload"
+          />
         </el-tab-pane>
       </el-tabs>
       <!-- 弹出框 -->
       <shop-dialog
         :visible.sync="visible"
-        @dialogFormVisible="visible = false"
         :title="['添加', title]"
         :value="value"
+        @dialogFormVisible="visible = false"
         @close="visible = false"
         @upload="upload"
       />
@@ -58,7 +89,7 @@ import { getCategories, getGoodAttributes } from "@/api/goods";
 import ParameterTable from "./components/ParameterTable";
 import ShopDialog from "./components/ShopDialog";
 // import Static from "./components/Static";
-export default  {
+export default {
   name: "ShopParameter",
   components: {
     "shop-dynamic": ParameterTable,
@@ -102,7 +133,7 @@ export default  {
     },
     //  获取参数列表
     async getGoodAttributes(sel) {
-      let id = this.value[this.value.length - 1];
+      const id = this.value[this.value.length - 1];
       const data = await getGoodAttributes(id, {
         sel,
       });

@@ -39,7 +39,7 @@ export const getGoodAttributes = (id, params) => {
   })
 }
 // 删除商品参数
-export const Categories = (id, attrId,data) => {
+export const Categories = (id, attrId, data) => {
   return request({
     method: 'PUT',
     url: `/categories/${id}/attributes/${attrId}`,
@@ -47,7 +47,7 @@ export const Categories = (id, attrId,data) => {
   })
 }
 // 编辑商品参数
-export const PutCategories = (id,attrId,data) => {
+export const PutCategories = (id, attrId, data) => {
   return request({
     method: 'PUT',
     url: `/categories/${id}/attributes/${attrId}`,
@@ -55,18 +55,49 @@ export const PutCategories = (id,attrId,data) => {
   })
 }
 // 删除商品参数
-export const DeleteCategories = (id,attrId,data) => {
+export const DeleteCategories = (id, attrId, data) => {
   return request({
     method: 'DELETE',
     url: `/categories/${id}/attributes/${attrId}`,
     data
   })
 }
-// 天机商品参数
-export const addCategories = (id,data) => {
+// 添加商品参数
+export const addCategories = (id, data) => {
   return request({
     method: 'POST',
     url: `/categories/${id}/attributes`,
+    data
+  })
+}
+// 获取商品分类
+export const getGoodcategories = (params) => {
+  return request({
+    method: 'GET',
+    url: `/categories`,
+    params
+  })
+}
+// 删除商品分类
+export const deleteGoodcategories = (id) => {
+  return request({
+    method: 'DELETE',
+    url: `/categories/${id}`
+  })
+}
+// 编辑商品分类
+export const uploadGoodcategories = (id, data) => {
+  return request({
+    method: 'PUT',
+    url: `/categories/${id}`,
+    data
+  })
+}
+// 天机商品分类
+export const addGoodcategories = data => {
+  return request({
+    method: 'POST',
+    url: `/categories`,
     data
   })
 }
