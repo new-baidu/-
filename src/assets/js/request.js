@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store";
 import { Message } from "element-ui";
 const request = axios.create({
-  baseURL: ""
+  baseURL: process.env.VUE_APP_PUBLIC_PATH
 });
 request.interceptors.response.use(
   res => {
