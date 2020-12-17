@@ -15,3 +15,10 @@ export function usersList (params) {
         params
     })
 } 
+// 用户数据列表
+export function reports () {
+    return request({
+        url: 'reports/type/1',
+        method: 'get'
+    })
+} 

@@ -1,9 +1,10 @@
 <template>
-  <div class="">
-    <div id="main" ref="main" style="width: 600px;height:400px;"></div>
+  <div class="data" style="width: 100%;height:700px;">
+    <div id="main" ref="main" style="width: 100%;height:700px;"></div>
   </div>
 </template>
 <script>
+import { reports } from "@/api/login";
 import * as echarts from "echarts";
 // var myChart = echarts.init(document.getElementById("main"));
 export default {
@@ -14,42 +15,101 @@ export default {
       myChart: null,
       option: {
         title: {
-          text: "435"
+          text: "名媛男团435"
         },
-        tooltip: {},
-        legend: {
-          data: ["销量"]
-        },
-        xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [
-          {
-            name: "销量",
-            type: "bar",
-            data: [5, 20, 36, 10, 10, 20]
+        tooltip: {
+          show: true,
+          trigger: "axis",
+          axisPointer: {
+            type: "cross"
+          },
+          backgroundColor: "rgba(245, 245, 245, 0.8)",
+          borderWidth: 1,
+          borderColor: "#ccc",
+          padding: 10,
+          textStyle: {
+            color: "#000"
           }
-        ]
+        }
       }
     };
   },
+  watch: {
+    option: {
+      handler(newVal, oldVal) {
+        this.myChart.setOption(newVal, true);
+      },
+      deep: true
+    }
+  },
   created() {
+    this.reports();
     this.$nextTick(() => {
+      // console.log(100)
+      // console.log(this.$refs.main);
+      // this.myChart =
       this.myChart = echarts.init(this.$refs.main);
-    //   echarts.init(this.myChart)
-      this.init()
+      // console.log(this.myChart)
+      this.myChart.setOption(this.option);
     });
+
     //   myChart.setOption(option)
   },
   computed: {},
   methods: {
-    init() {
-      this.myChart.setOption(this.option);
+    reports() {
+      reports()
+        .then(res => {
+          console.log(res);
+          // this.option = res.data;
+          // this.option.legend = res.data.legend;
+          // this.option.series = res.data.series;
+          // this.option.xAxis = res.data.xAxis[0];
+          // this.option.yAxis = res.data.yAxis[0];
+          let option = {
+            legend: res.data.legend,
+            series: res.data.series,
+            xAxis: {boundaryGap: false, data: res.data.xAxis[0].data,areaStyle: {
+            color:'red',
+            opacity: 0.3,
+            origin:"start"
+        }},
+            yAxis: res.data.yAxis[0],
+            title: {
+              text: "名媛男团435"
+            },
+            tooltip: {
+              show: true,
+              trigger: "axis",
+              axisPointer: {
+                type: "cross"
+              },
+              backgroundColor: "rgba(245, 245, 245, 0.8)",
+              borderWidth: 1,
+              borderColor: "#ccc",
+              padding: 10,
+              textStyle: {
+                color: "#000"
+              }
+            }
+          }
+          this.option = option
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
-  mounted() {},
-  activated() {} // 如果页面有keep-alive缓存功能，这个函数会触发
+  beforeDestroy() {
+    if (!this.myChart) {
+      return;
+    }
+    this.myChart.dispose();
+    // console.log(this.myChart)
+    this.myChart = null;
+    // this.myChart = null;
+    // alert(this.myChart)
+  }
 };
 </script>
 <style lang="scss" src="" scoped></style>
