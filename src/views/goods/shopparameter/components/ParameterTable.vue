@@ -15,38 +15,24 @@
             closable
             :disable-transitions="false"
             type="success"
-            @close="
-              upCategories(
-                scope.row.attr_id,
-                scope.row.attr_name,
-                scope.row.attr_sel,
-                scope.row.attr_vals,
-                tag
-              )
-            "
+            @close="upCategories(scope.row, tag)"
           >
             {{ tag }}
           </el-tag>
           <el-input
-            v-if="inputVisible"
+            v-if="scope.row.inputVisible"
             ref="saveTagInput"
-            v-model="inputValue"
+            v-model="scope.row.inputValue"
             class="input-new-tag"
             size="small"
-            @keyup.enter.native="handleInputConfirm()"
-            @blur="
-              handleInputConfirm(
-                scope.$index,
-                scope.row.attr_id,
-                scope.row.attr_sel
-              )
-            "
+            @keyup.enter.native="handleInputConfirm(scope.row)"
+            @blur="handleInputConfirm(scope.row)"
           />
           <el-button
             v-else
             class="button-new-tag"
             size="small"
-            @click="showInput()"
+            @click="showInput(scope.row)"
           >
             + New Tag
           </el-button>
@@ -124,8 +110,8 @@ export default {
   data() {
     return {
       attrs: [],
-      inputValue: "", // 输入的内容
-      inputVisible: false, // 输入框显示隐藏
+      // inputValue: "", // 输入的内容
+      // inputVisible: false, // 输入框显示隐藏
       visible: false, // 弹出窗显示
       attr_name: "", // 点击弹出的内容
       attr_id: "", // 编辑的id
@@ -164,11 +150,11 @@ export default {
         .catch(() => {})
     },
     // 更新参数
-    async upCategories(arrtId, attr_name, attr_sel, attr_vals, tag) {
+    async upCategories(row, tag) {
       // 定义数组
       const arr = []
       // 遍历数组，把删除的排除掉，把剩下的放到新数组
-      attr_vals.forEach((val) => {
+      row.attr_vals.forEach((val) => {
         if (val !== tag) {
           arr.push(val)
         }
@@ -176,43 +162,47 @@ export default {
       // 获取分类id
       const id = this.value[this.value.length - 1]
       // 发送请求
-      const data = await Categories(id, arrtId, {
-        attr_name,
-        attr_sel,
+      const data = await Categories(id, row.attr_id, {
+        attr_name: row.attr_name,
+        attr_sel: row.attr_sel,
         attr_vals: arr.join(","),
       })
+      row.attr_vals.splice(row.attr_vals.indexOf(tag), 1)
       // 成功返回提示
       if (data.meta.status == 200) {
         this.$message({
           message: data.meta.msg,
           type: "success",
         })
-        attr_vals.splice(attr_vals.indexOf(tag), 1)
       }
       // console.log(arr);
     }, // 点击 显示input输入框
-    showInput() {
-      this.inputVisible = true
+    showInput(row) {
+      row.inputVisible = true
       this.$nextTick(() => {
         this.$refs.saveTagInput.$refs.input.focus()
       })
     }, // 失去焦点
-    async handleInputConfirm(index, attr_id, sel) {
-      const inputValue = this.inputValue
+    async handleInputConfirm(row) {
+      if (row.inputValue.trim() === "") {
+        row.inputValue = ""
+        row.inputVisible = false
+        return
+      }
       const id = this.value[this.value.length - 1]
       // 判断是否为空
-      if (inputValue) {
-        this.attrs[index].attr_vals.push(inputValue)
+      if (row.inputValue) {
+        row.attr_vals.push(row.inputValue)
       }
       // 输入框隐藏
-      this.inputVisible = false
+      row.inputVisible = false
       // 清空内容
-      this.inputValue = ""
+      row.inputValue = ""
       // 发送请求
-      const data = await Categories(id, attr_id, {
-        attr_name: inputValue,
-        attr_sel: sel,
-        attr_vals: this.attrs[index].attr_vals.join(","),
+      const data = await Categories(id, row.attr_id, {
+        attr_name: row.attr_name,
+        attr_sel: row.attr_sel,
+        attr_vals: row.attr_vals.join(","),
       })
       // 成功提示
       if (data.meta.status == 200) {

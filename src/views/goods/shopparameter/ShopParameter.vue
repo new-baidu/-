@@ -181,6 +181,8 @@ export default {
           attr_write: val.attr_write,
           cat_id: val.cat_id,
           delete_time: val.delete_time,
+          inputValue: "",
+          inputVisible: false
         });
       });
     }, // 添加参数
