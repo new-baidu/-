@@ -63,13 +63,13 @@ const routes = [
       {
         path: "/permissionList",
         name: "permissionList",
-        component: Home
+        component: () => import("@/views/permissionList/PermissionList.vue")
       },
       // 订单列表
       {
         path: "/orderList",
         name: "orderList",
-        component: Home
+        component: () => import("@/views/orderList/OrderList.vue")
       },
       // 数据报表
       {
