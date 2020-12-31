@@ -57,7 +57,7 @@ const routes = [
       {
         path: "/roleList",
         name: "roleList",
-        component: Home
+        component: () => import("@/views/roleList/RoleList.vue")
       },
       // 权限列表
       {

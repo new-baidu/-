@@ -42,20 +42,14 @@ export default {
       deep: true
     }
   },
-  created() {
+  mounted() {
+    this.myChart = echarts.init(this.$refs.main);
     this.reports();
-    this.$nextTick(() => {
-      // console.log(100)
-      // console.log(this.$refs.main);
-      // this.myChart =
-      this.myChart = echarts.init(this.$refs.main);
-      // console.log(this.myChart)
-      this.myChart.setOption(this.option);
-    });
-
-    //   myChart.setOption(option)
+    // this.$nextTick(() => {
+    //   this.myChart = echarts.init(this.$refs.main);
+    //   this.myChart.setOption(this.option);
+    // })
   },
-  computed: {},
   methods: {
     reports() {
       reports()
@@ -69,11 +63,15 @@ export default {
           let option = {
             legend: res.data.legend,
             series: res.data.series,
-            xAxis: {boundaryGap: false, data: res.data.xAxis[0].data,areaStyle: {
-            color:'red',
-            opacity: 0.3,
-            origin:"start"
-        }},
+            xAxis: {
+              boundaryGap: false,
+              data: res.data.xAxis[0].data,
+              areaStyle: {
+                color: "red",
+                opacity: 0.3,
+                origin: "start"
+              }
+            },
             yAxis: res.data.yAxis[0],
             title: {
               text: "名媛男团435"
@@ -92,8 +90,9 @@ export default {
                 color: "#000"
               }
             }
-          }
-          this.option = option
+          };
+          this.option = option;
+          this.myChart.setOption(this.option,true);
         })
         .catch(err => {
           console.log(err);
