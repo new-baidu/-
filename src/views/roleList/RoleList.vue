@@ -1,33 +1,16 @@
 <template>
   <div class="permissionList">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">
-        首页
-      </el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }"> 首页 </el-breadcrumb-item>
       <el-breadcrumb-item>权限管理</el-breadcrumb-item>
       <el-breadcrumb-item>角色列表</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card
-      class="box-card"
-      shadow="never"
-    >
-      <el-button
-        type="primary"
-        @click="add"
-      >
-        添加角色
-      </el-button>
-      <el-table
-        :data="tableData"
-        border
-        stripe
-      >
+    <el-card class="box-card" shadow="never">
+      <el-button type="primary" @click="add"> 添加角色 </el-button>
+      <el-table :data="tableData" border stripe>
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <div
-              v-if="scope.row.children.length != 0"
-              class="box"
-            >
+            <div v-if="scope.row.children.length != 0" class="box">
               <div
                 v-for="(item, index) in scope.row.children"
                 :key="index"
@@ -45,11 +28,7 @@
                     class="btnList"
                   >
                     <div class="right1">
-                      <el-tag
-                        closable
-                        class="tag1"
-                        type="success"
-                      >
+                      <el-tag closable class="tag1" type="success">
                         {{ item1.authName }}
                       </el-tag>
                       <i class="el-icon-caret-right tag2" />
@@ -77,14 +56,8 @@
             {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column
-          label="角色名称"
-          prop="roleName"
-        />
-        <el-table-column
-          label="角色描述"
-          prop="roleDesc"
-        />
+        <el-table-column label="角色名称" prop="roleName" />
+        <el-table-column label="角色描述" prop="roleDesc" />
         <el-table-column label="操作">
           <template>
             <el-button><i class="iconfont iconbianji1" />编辑</el-button>
@@ -95,10 +68,7 @@
       </el-table>
     </el-card>
     <!-- 弹窗 -->
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="visible"
-    >
+    <el-dialog :title="dialogTitle" :visible.sync="visible">
       <el-form :model="form" :rules="rules">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="form.name" />
@@ -107,17 +77,9 @@
           <el-input v-model="form.describe" />
         </el-form-item>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="dialogFormVisible = false">
-          取 消
-        </el-button>
-        <el-button
-          type="primary"
-          @click="dialogFormVisible = false"
-        >
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false"> 取 消 </el-button>
+        <el-button type="primary" @click="submit">
           确 定
         </el-button>
       </div>
@@ -142,7 +104,7 @@ export default {
       } else {
         return "未付款";
       }
-    }
+    },
   },
   data() {
     return {
@@ -153,13 +115,13 @@ export default {
       total: null,
       dialogTitle: "",
       visible: false,
-      rules: [
-        name: {}
-      ],
+      rules: {
+        name: [{ required: true, message: "请输入活动名称", trigger: "blur" }]
+      },
       form: {
         name: "",
-        describe: ""
-      }
+        describe: "",
+      },
     };
   },
   created() {
@@ -171,15 +133,15 @@ export default {
       const params = {
         pagenum: this.page,
         pagesize: this.pageSize,
-        query: this.query
+        query: this.query,
       };
       rolesList()
-        .then(res => {
+        .then((res) => {
           console.log(res);
           // this.total = res.data.total;
           this.tableData = res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -190,8 +152,11 @@ export default {
     edit() {
       this.dialogTitle = "修改角色";
       this.visible = true;
+    },
+    submit(){
+
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -238,6 +203,21 @@ export default {
   }
   .el-tag {
     margin: 10px;
+  }
+}
+.el-form-item {
+  display: flex;
+  width: 100%;
+  padding-left: 10px;
+  font-size: 14px;
+  .el-form-item__label {
+    flex: 3;
+  }
+  .el-form-item__content {
+    flex: 7;
+    .el-input {
+      width: 100%;
+    }
   }
 }
 </style>
