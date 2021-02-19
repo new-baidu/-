@@ -37,18 +37,17 @@ export default {
   watch: {
     option: {
       handler(newVal, oldVal) {
+        console.log(newVal);
         this.myChart.setOption(newVal, true);
       },
       deep: true
     }
   },
   mounted() {
-    this.myChart = echarts.init(this.$refs.main);
-    this.reports();
-    // this.$nextTick(() => {
-    //   this.myChart = echarts.init(this.$refs.main);
-    //   this.myChart.setOption(this.option);
-    // })
+    this.$nextTick(() => {
+      this.myChart = echarts.init(this.$refs.main);
+      this.reports();
+    });
   },
   methods: {
     reports() {
@@ -92,7 +91,7 @@ export default {
             }
           };
           this.option = option;
-          this.myChart.setOption(this.option,true);
+          this.myChart.setOption(option);
         })
         .catch(err => {
           console.log(err);
