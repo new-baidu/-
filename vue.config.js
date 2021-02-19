@@ -3,7 +3,7 @@ module.exports = {
     proxy: {
       "/": {
         changeOrigin: true,
-        target: "http://timemeetyou.com:8889/api/private/v1/"
+        target: "https://api.naccl.top/vue/shop/api/private/v1/"
       }
     }
   },
