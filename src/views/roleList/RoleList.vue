@@ -1,16 +1,33 @@
 <template>
   <div class="permissionList">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }"> 首页 </el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">
+        首页
+      </el-breadcrumb-item>
       <el-breadcrumb-item>权限管理</el-breadcrumb-item>
       <el-breadcrumb-item>角色列表</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card class="box-card" shadow="never">
-      <el-button type="primary" @click="add"> 添加角色 </el-button>
-      <el-table :data="tableData" border stripe>
+    <el-card
+      class="box-card"
+      shadow="never"
+    >
+      <el-button
+        type="primary"
+        @click="add"
+      >
+        添加角色
+      </el-button>
+      <el-table
+        :data="tableData"
+        border
+        stripe
+      >
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <div v-if="scope.row.children.length != 0" class="box">
+            <div
+              v-if="scope.row.children.length != 0"
+              class="box"
+            >
               <div
                 v-for="(item, index) in scope.row.children"
                 :key="index"
@@ -28,7 +45,11 @@
                     class="btnList"
                   >
                     <div class="right1">
-                      <el-tag closable class="tag1" type="success">
+                      <el-tag
+                        closable
+                        class="tag1"
+                        type="success"
+                      >
                         {{ item1.authName }}
                       </el-tag>
                       <i class="el-icon-caret-right tag2" />
@@ -56,38 +77,98 @@
             {{ scope.$index + 1 }}
           </template>
         </el-table-column>
-        <el-table-column label="角色名称" prop="roleName" />
-        <el-table-column label="角色描述" prop="roleDesc" />
+        <el-table-column
+          label="角色名称"
+          prop="roleName"
+        />
+        <el-table-column
+          label="角色描述"
+          prop="roleDesc"
+        />
         <el-table-column label="操作">
-          <template>
-            <el-button><i class="iconfont iconbianji1" />编辑</el-button>
-            <el-button><i class="iconfont icondelete" />删除</el-button>
-            <el-button><i class="iconfont iconsum" />分配权限</el-button>
+          <template slot-scope="scope">
+            <el-button @click="edit(scope.row)">
+              <i class="iconfont iconbianji1" />编辑
+            </el-button>
+            <el-button @click="del(scope.row.id)">
+              <i class="iconfont icondelete" />删除
+            </el-button>
+            <el-button @click="clcikTree(scope.row)">
+              <i class="iconfont iconsum" />分配权限
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
     <!-- 弹窗 -->
-    <el-dialog :title="dialogTitle" :visible.sync="visible">
-      <el-form :model="form" :rules="rules">
-        <el-form-item label="角色名称" prop="name">
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="visible"
+      width="40%"
+    >
+      <el-form
+        ref="ruleForm"
+        :model="form"
+        :rules="rules"
+      >
+        <el-form-item
+          label="角色名称"
+          prop="name"
+        >
           <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="角色描述">
           <el-input v-model="form.describe" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false"> 取 消 </el-button>
-        <el-button type="primary" @click="submit">
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="visible = false">
+          取 消
+        </el-button>
+        <el-button
+          type="primary"
+          @click="submit"
+        >
           确 定
+        </el-button>
+      </div>
+    </el-dialog>
+    <el-dialog
+      title="分配权限"
+      :visible.sync="treeVisible"
+      width="50%"
+    >
+      <!-- <el-tree
+        :data="treeData"
+        :props="prop"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        :default-checked-keys="checkeds"
+        check-on-click-node
+      /> -->
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="treeVisible = false">
+          关闭
         </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import { rolesList } from "@/api/rolesList.js";
+import {
+  rolesList,
+  addRoles,
+  editRoles,
+  delRoles,
+  tree
+} from "@/api/rolesList.js";
 import moment from "moment";
 export default {
   name: "RoleList",
@@ -104,7 +185,7 @@ export default {
       } else {
         return "未付款";
       }
-    },
+    }
   },
   data() {
     return {
@@ -120,43 +201,165 @@ export default {
       },
       form: {
         name: "",
-        describe: "",
+        describe: ""
       },
+      treeData: [],
+      treeVisible: false,
+      prop: {
+        label: "authName"
+      },
+      checked: [],
+      checkeds: []
     };
   },
   created() {
-    this.rolesList();
+    // this.rolesList();
+    // this.tree();
   },
   methods: {
+    setName(datas) {
+      // 遍历树  获取id数组
+      for (var i in datas) {
+        this.checked.push(datas[i].id);
+        if (datas[i].children) {
+          this.setName(datas[i].children);
+        }
+      }
+    },
+    clcikTree(row) {
+      this.checked = []
+      this.checkeds = []
+      this.setName(row.children)
+      this.$nextTick(()=>{
+        this.checkeds = this.checked
+      })
+      this.treeVisible = true;
+    },
+    tree() {
+      tree().then(res => {
+        console.log(res);
+        this.treeData = res.data;
+      });
+    },
     // 角色列表
     rolesList() {
       const params = {
         pagenum: this.page,
         pagesize: this.pageSize,
-        query: this.query,
+        query: this.query
       };
       rolesList()
-        .then((res) => {
+        .then(res => {
           console.log(res);
           // this.total = res.data.total;
           this.tableData = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     add() {
       this.dialogTitle = "添加角色";
       this.visible = true;
+      this.id = null;
+      this.form.name = "";
+      this.form.describe = "";
     },
-    edit() {
+    edit(row) {
       this.dialogTitle = "修改角色";
+
+      this.id = row.id;
+      this.form.name = row.roleName;
+      this.form.describe = row.roleDesc;
       this.visible = true;
     },
-    submit(){
+    del(id) {
+      this.$confirm("此操作将删除该角色, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          delRoles(id)
+            .then(() => {
+              this.$message({
+                type: "success",
+                message: "删除成功"
+              });
 
+              this.rolesList();
+            })
+            .catch(() => {
+              this.$message({
+                type: "warning",
+                message: "删除失败，请退出重试！"
+              });
+
+              this.rolesList();
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    submit() {
+      this.$refs.ruleForm.validate(valid => {
+        if (!valid) return;
+        if (this.id) {
+          // 修改
+          this.editRoles();
+        } else {
+          // 添加
+          this.addRoles();
+        }
+      });
+    },
+    addRoles() {
+      addRoles({
+        roleName: this.form.name,
+        roleDesc: this.form.describe
+      })
+        .then(res => {
+          this.$message({
+            type: "success",
+            message: "添加成功"
+          });
+          this.visible = false;
+          this.rolesList();
+        })
+        .catch(() => {
+          this.$message({
+            type: "warning",
+            message: "添加失败，请退出重试！"
+          });
+          this.visible = false;
+        });
+    },
+    editRoles() {
+      editRoles(this.id, {
+        roleName: this.form.name,
+        roleDesc: this.form.describe
+      })
+        .then(res => {
+          this.$message({
+            type: "success",
+            message: "修改成功"
+          });
+          this.visible = false;
+          this.rolesList();
+        })
+        .catch(() => {
+          this.$message({
+            type: "warning",
+            message: "添加失败，请退出重试！"
+          });
+          this.visible = false;
+        });
     }
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -205,16 +408,18 @@ export default {
     margin: 10px;
   }
 }
-.el-form-item {
+/deep/.el-form-item {
   display: flex;
   width: 100%;
   padding-left: 10px;
   font-size: 14px;
+  padding: 0px 20px;
+  box-sizing: border-box;
   .el-form-item__label {
-    flex: 3;
+    flex: 1;
   }
   .el-form-item__content {
-    flex: 7;
+    flex: 9;
     .el-input {
       width: 100%;
     }
