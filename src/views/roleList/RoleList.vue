@@ -34,7 +34,10 @@
                 class="item"
               >
                 <div class="left">
-                  <el-tag closable>
+                  <el-tag
+                    closable
+                    @close="delRights(scope.row.id, item.id)"
+                  >
                     {{ item.authName }}
                   </el-tag>
                 </div>
@@ -49,6 +52,7 @@
                         closable
                         class="tag1"
                         type="success"
+                        @close="delRights(scope.row.id, item1.id)"
                       >
                         {{ item1.authName }}
                       </el-tag>
@@ -61,6 +65,7 @@
                         :key="index2"
                         closable
                         type="warning"
+                        @close="delRights(scope.row.id, item2.id)"
                       >
                         {{ item2.authName }}
                       </el-tag>
@@ -141,7 +146,8 @@
       :visible.sync="treeVisible"
       width="50%"
     >
-      <!-- <el-tree
+      <el-tree
+        ref="rightsTree"
         :data="treeData"
         :props="prop"
         show-checkbox
@@ -149,13 +155,19 @@
         node-key="id"
         :default-checked-keys="checkeds"
         check-on-click-node
-      /> -->
+        
+      />
+      <!-- @check="check" -->
+      <!-- @check-change="checkChange" -->
       <div
         slot="footer"
         class="dialog-footer"
       >
         <el-button @click="treeVisible = false">
-          关闭
+          取消
+        </el-button>
+        <el-button @click="setRights">
+          确定
         </el-button>
       </div>
     </el-dialog>
@@ -164,10 +176,12 @@
 <script>
 import {
   rolesList,
-  addRoles,
-  editRoles,
-  delRoles,
-  tree
+  add,
+  edit,
+  del,
+  tree,
+  delRights,
+  setRights
 } from "@/api/rolesList.js";
 import moment from "moment";
 export default {
@@ -209,30 +223,73 @@ export default {
         label: "authName"
       },
       checked: [],
-      checkeds: []
+      checkeds: [],
+      roleId: null
     };
   },
   created() {
-    // this.rolesList();
-    // this.tree();
+    this.rolesList();
+    this.tree();
   },
   methods: {
+    // 设置权限
+    setRights() {
+      const ids = this.$refs.rightsTree.getCheckedKeys().join(',');
+      console.log(ids)
+      setRights(this.roleId,{ rids: ids })
+        .then(res => {
+          console.log(res);
+          this.$message({
+            type: 'success',
+            message: '更新成功！'
+          })
+          this.treeVisible = false
+          this.rolesList()
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    // 删除角色指定权限
+    delRights(roleId, rightId) {
+      delRights(roleId, rightId)
+        .then(res => {
+          console.log(res);
+          // this.tableData = res.data
+          const data = this.tableData;
+          const index = data.findIndex(item => {
+            return item.id == roleId;
+          });
+          console.log(index);
+          data[index].children = res.data;
+          this.$nextTick(() => {
+            this.tableData = data;
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     setName(datas) {
       // 遍历树  获取id数组
       for (var i in datas) {
-        this.checked.push(datas[i].id);
         if (datas[i].children) {
           this.setName(datas[i].children);
+        } else {
+          this.checked.push(datas[i].id);
         }
       }
     },
     clcikTree(row) {
-      this.checked = []
-      this.checkeds = []
-      this.setName(row.children)
-      this.$nextTick(()=>{
-        this.checkeds = this.checked
-      })
+      this.roleId = row.id;
+      this.checked = [];
+      this.checkeds = [];
+      this.setName(row.children);
+      this.$nextTick(() => {
+        // this.checkeds = [105]
+        this.checkeds = JSON.parse(JSON.stringify(this.checked));
+        this.$refs.rightsTree.setCheckedKeys(this.checkeds);
+      });
       this.treeVisible = true;
     },
     tree() {
@@ -280,7 +337,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delRoles(id)
+          del(id)
             .then(() => {
               this.$message({
                 type: "success",
@@ -310,15 +367,15 @@ export default {
         if (!valid) return;
         if (this.id) {
           // 修改
-          this.editRoles();
+          this.edit();
         } else {
           // 添加
-          this.addRoles();
+          this.add();
         }
       });
     },
-    addRoles() {
-      addRoles({
+    add() {
+      add({
         roleName: this.form.name,
         roleDesc: this.form.describe
       })
@@ -338,8 +395,8 @@ export default {
           this.visible = false;
         });
     },
-    editRoles() {
-      editRoles(this.id, {
+    edit() {
+      edit(this.id, {
         roleName: this.form.name,
         roleDesc: this.form.describe
       })

@@ -8,7 +8,7 @@ export const rolesList = () => {
     })
 }
 // 添加角色
-export const addRoles = (data) => {
+export const add = (data) => {
     return request({
         method: 'post',
         url: '/roles',
@@ -16,15 +16,15 @@ export const addRoles = (data) => {
     })
 }
 // 修改角色
-export const editRoles = (id,data) => {
+export const edit = (id,data) => {
     return request({
         method: 'put',
         url: `/roles/${id}`,
         data
     })
 }
-// 修改角色
-export const delRoles = (id) => {
+// 删除角色
+export const del = (id) => {
     return request({
         method: 'delete',
         url: `/roles/${id}`
@@ -35,5 +35,20 @@ export const tree = (id) => {
     return request({
         method: 'get',
         url: `/rights/tree`
+    })
+}
+// 删除角色指定权限
+export const delRights = (roleId,rightId) => {
+    return request({
+        method: 'delete',
+        url: `roles/${roleId}/rights/${rightId}`
+    })
+}
+// 删除角色指定权限
+export const setRights = (roleId,data) => {
+    return request({
+        method: 'post',
+        url: `roles/${roleId}/rights`,
+        data
     })
 }
