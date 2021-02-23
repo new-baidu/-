@@ -3,7 +3,7 @@ module.exports = {
     proxy: {
       "/": {
         changeOrigin: true,
-        target: "http://timemeetyou.com:8889/api/private/v1/10"
+        target: "http://timemeetyou.com:8889/api/private/v1"
       }
     }
   },
