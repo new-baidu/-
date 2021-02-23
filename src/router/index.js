@@ -57,19 +57,19 @@ const routes = [
       {
         path: "/roleList",
         name: "roleList",
-        component: () => import("@/views/authority/roleList/roleList.vue")
+        component: () => import("@/views/roleList/RoleList.vue")
       },
       // 权限列表
       {
         path: "/permissionList",
         name: "permissionList",
-        component: Home
+        component: () => import("@/views/permissionList/PermissionList.vue")
       },
       // 订单列表
       {
         path: "/orderList",
         name: "orderList",
-        component: Home
+        component: () => import("@/views/orderList/OrderList.vue")
       },
       // 数据报表
       {

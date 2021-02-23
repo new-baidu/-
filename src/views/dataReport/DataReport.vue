@@ -37,25 +37,18 @@ export default {
   watch: {
     option: {
       handler(newVal, oldVal) {
+        console.log(newVal);
         this.myChart.setOption(newVal, true);
       },
       deep: true
     }
   },
-  created() {
-    this.reports();
+  mounted() {
     this.$nextTick(() => {
-      // console.log(100)
-      // console.log(this.$refs.main);
-      // this.myChart =
       this.myChart = echarts.init(this.$refs.main);
-      // console.log(this.myChart)
-      this.myChart.setOption(this.option);
+      this.reports();
     });
-
-    //   myChart.setOption(option)
   },
-  computed: {},
   methods: {
     reports() {
       reports()
@@ -69,11 +62,15 @@ export default {
           let option = {
             legend: res.data.legend,
             series: res.data.series,
-            xAxis: {boundaryGap: false, data: res.data.xAxis[0].data,areaStyle: {
-            color:'red',
-            opacity: 0.3,
-            origin:"start"
-        }},
+            xAxis: {
+              boundaryGap: false,
+              data: res.data.xAxis[0].data,
+              areaStyle: {
+                color: "red",
+                opacity: 0.3,
+                origin: "start"
+              }
+            },
             yAxis: res.data.yAxis[0],
             title: {
               text: "名媛男团435"
@@ -92,8 +89,9 @@ export default {
                 color: "#000"
               }
             }
-          }
-          this.option = option
+          };
+          this.option = option;
+          this.myChart.setOption(option);
         })
         .catch(err => {
           console.log(err);
