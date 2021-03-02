@@ -37,7 +37,7 @@
 
       <!-- 表格 -->
       <div class="data">
-        <Userlist :userlist='list' v-loading="loading" element-loading-text="拼命加载中"></Userlist>
+        <SeedUserlist :userlist.sync='list' v-loading="loading" element-loading-text="拼命加载中"></SeedUserlist>
       </div>
 
       <div class="page">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import Userlist from '../components/userlist.vue'
+  import SeedUserlist from '../components/seedUserlist.vue'
   import AddDialog from '../components/addDialogVisible.vue'
   import {
     getUserList
@@ -63,7 +63,7 @@
   export default {
     name: 'UserList',
     components: {
-      'Userlist': Userlist,
+      'SeedUserlist': SeedUserlist,
       'AddDialog': AddDialog
     },
     data() {
@@ -94,7 +94,6 @@
           query: this.query
         }
         getUserList(Data).then(res => {
-          console.log(res)
           this.list = res.data.users
           // console.log(this.list)
           this.total = res.data.total

@@ -21,15 +21,6 @@ export const putUserList = (uId,type) => {
   })
 }
 
-// 删除用户
-export const deleteUserList = params => {
-  return request({
-    method: 'DELETE',
-    url: `users/'${id}'`,
-    params
-  })
-}
-
 //添加新用户
 export const addUserList = data => {
   return request({
@@ -40,10 +31,19 @@ export const addUserList = data => {
 }
 
 // 设置
-export const compileUser = params => {
+export const compileUser = (id,data) => {
   return request({
     method: 'PUT',
-    url: `users/'${id}'`,
-    params
+    url: `users/${id}`,
+    data
+  })
+}
+
+// 删除用户
+export const deleteUser = (id,data) => {
+  return request({
+    method: 'DELETE',
+    url: `users/${id}`,
+    data
   })
 }

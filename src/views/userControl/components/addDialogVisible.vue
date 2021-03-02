@@ -149,8 +149,7 @@
       // 取消添加
       onAddDialog(formName, addDialogVisible) {
         this.addDialogVisible = false
-        this.$refs[formName].resetFields();
-        console.log(type)
+        this.$refs.ruleForm.resetFields();
       },
 
       // 确定添加
