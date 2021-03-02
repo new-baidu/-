@@ -27,10 +27,10 @@
       <el-table-column prop="address" label="操作">
 
         <!-- 编辑、删除、设置按钮 -->
-        <el-row class="state">
-
+        <template class="state" slot-scope="scope">
           <!-- 编辑 -->
-          <el-button class="states el-icon-edit" type="primary" size="mini"></el-button>
+          <el-button class="states el-icon-edit" type="primary" size="mini" @click="onStatesEdit(scope.row)">
+          </el-button>
 
           <!-- 删除 -->
           <el-button class="states el-icon-delete" type="danger" size="mini" @click="onDelete"></el-button>
@@ -38,16 +38,40 @@
           <!-- 设置 -->
           <el-button class="states el-icon-s-tools" type="warning" size="mini"></el-button>
 
-        </el-row>
+        </template>
 
       </el-table-column>
     </el-table>
+    <!-- 编辑弹出层 -->
+    <el-dialog title="修改用户" :visible.sync="edit" width="30%">
+      <div style="margin-right: 20px; ">
+        <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+          <el-form-item label="用户名 ">
+            <el-input v-model="formLabelAlign.name" disabled="disabled" ></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱 ">
+            <el-input v-model="formLabelAlign.region"></el-input>
+          </el-form-item>
+          <el-form-item label="手机号 ">
+            <el-input v-model="formLabelAlign.type"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="edit = false">取 消</el-button>
+        <el-button type="primary" @click="edit = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
   </div>
 </template>
 
 <script>
   import {
-    putUserList
+    getUserList,
+    putUserList,
+    compileUser
   } from '@/api/userList'
   export default {
     name: 'userlist-box',
@@ -60,6 +84,13 @@
       return {
         uId: 0, // 用户ID
         // value: true // 用户状态
+        edit: false, // 编辑弹出层
+        labelPosition: 'right',
+        formLabelAlign: {
+          name: '',
+          region: '',
+          type: ''
+        }
       }
     },
     created() {
@@ -86,9 +117,15 @@
         })
       },
 
+      // 编辑
+      onStatesEdit(row) {
+        this.edit = true;
+        console.log(row)
+      },
+
       // 删除
-      onDelete () {
-        
+      onDelete() {
+
       }
     }
 

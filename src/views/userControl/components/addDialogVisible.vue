@@ -1,14 +1,14 @@
 <template>
   <div class="addDialog">
-    <el-dialog class="dialog" title="添加用户" :visible.sync="addDialogVisible" style="width: 700px;">
-      <el-form :model="form" :rules="Rules" style="width: 300px;" size="medium">
+    <el-dialog class="dialog" title="添加用户" :visible.sync="addDialogVisible" style="width: 700px;" :close-on-click-modal="false">
+      <el-form :model="form" :rules="Rules" style="width: 300px;" size="medium" ref="ruleForm">
         <!-- 用户 -->
         <el-form-item label="新用户" :label-width="formLabelWidth" class="dialogForm" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
 
         <!-- 密码 -->
-        <el-form-item  label="密码" :label-width="formLabelWidth" class="dialogForm" prop="password">
+        <el-form-item label="密码" :label-width="formLabelWidth" class="dialogForm" prop="password">
           <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
         </el-form-item>
 
@@ -24,13 +24,17 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="onAddDialog">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+        <el-button type="primary" @click="submitForm" ref="btn">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+  import {
+    addUserList
+  } from '@/api/userList'
+
   export default {
     name: 'AddDing',
     data() {
@@ -106,7 +110,7 @@
 
           // 手机
           mobile: [
-            { validator: checkPhone, required:true, trigger: 'blur' }
+            { validator: checkPhone, required: true, trigger: 'blur' }
           ]
         }
       }
@@ -130,22 +134,50 @@
     },
     watch: {},
     methods: {
-      // 确定添加
+
+      // 把信息封装到数组里
+      add() {
+        //没啥问题
+        let type = {
+          name: this.name,
+          password: this.password,
+          email: this.email,
+          mobile: this.mobile
+        }
+      },
+
+      // 取消添加
       onAddDialog(formName, addDialogVisible) {
         this.addDialogVisible = false
         this.$refs[formName].resetFields();
+        console.log(type)
       },
 
+      // 确定添加
       submitForm() {
-        console.log(this.form)
-      },
+        // console.log(this, this.$refs,this.$refs['ruleForm'].$el,this.$refs.btn)
+        this.$refs.ruleForm.validate((valid) => {
+          if (!valid) return
+          const userForm = addUserList({
+            username: this.form.name,
+            password: this.form.password,
+            email: this.form.email,
+            mobile: this.form.mobile,
+            
+          }).then((res) => {
+            this.$parent.$parent.onUserList()
+            this.addDialogVisible = false
+          })
+          
+        })
+      }
     }
   }
 
 </script>
 
 <style lang="scss" scoped>
-  .dialog{
+  .dialog {
     margin: 0 auto;
   }
 </style>

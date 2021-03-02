@@ -29,3 +29,21 @@ export const deleteUserList = params => {
     params
   })
 }
+
+//添加新用户
+export const addUserList = data => {
+  return request({
+    method: 'POST',
+    url: '/users',
+    data
+  })
+}
+
+// 设置
+export const compileUser = params => {
+  return request({
+    method: 'PUT',
+    url: `users/'${id}'`,
+    params
+  })
+}

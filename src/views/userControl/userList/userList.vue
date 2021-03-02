@@ -94,6 +94,7 @@
           query: this.query
         }
         getUserList(Data).then(res => {
+          console.log(res)
           this.list = res.data.users
           // console.log(this.list)
           this.total = res.data.total
@@ -125,7 +126,7 @@
       // 添加用户
       onShow() {
         this.show = true
-        console.log(123)
+        
       }
     }
   }
