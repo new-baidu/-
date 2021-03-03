@@ -13,7 +13,7 @@
     >
       <el-button
         type="primary"
-        @click="add"
+        @click="addUser"
       >
         添加角色
       </el-button>
@@ -315,7 +315,7 @@ export default {
           console.log(err);
         });
     },
-    add() {
+    addUser() {
       this.dialogTitle = "添加角色";
       this.visible = true;
       this.id = null;
