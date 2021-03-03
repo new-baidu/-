@@ -92,7 +92,7 @@
         />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button @click="edit(scope.row)">
+            <el-button @click="editUser(scope.row)">
               <i class="iconfont iconbianji1" />编辑
             </el-button>
             <el-button @click="del(scope.row.id)">
@@ -322,7 +322,7 @@ export default {
       this.form.name = "";
       this.form.describe = "";
     },
-    edit(row) {
+    editUser(row) {
       this.dialogTitle = "修改角色";
 
       this.id = row.id;
