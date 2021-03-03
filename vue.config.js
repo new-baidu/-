@@ -25,6 +25,14 @@ module.exports = {
       }
     }
   },
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title= '电商后台管理系统（435合作开发）'
+        return args
+      })
+  },
   configureWebpack: {
     //关闭 webpack 的性能提示
     performance: {
